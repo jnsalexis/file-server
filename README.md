@@ -4,6 +4,8 @@ Documentation de l'API File Server
 
 Cette documentation décrit les endpoints de l'API de gestion des fichiers. Elle inclut les informations sur les autorisations, les corps de requêtes JSON à fournir, et les exemples d'utilisation pour chaque endpoint.
 
+Nous vous conseillons d'utiliser Postman pour tester les endpoints de l'API.
+
 * * * * *
 
 Table des Matières
@@ -14,7 +16,7 @@ Table des Matières
     -   [Connexion (`/auth/login`)](#connexion-authlogin)
 2.  [Endpoints de Gestion des Fichiers](#endpoints-de-gestion-des-fichiers)
     -   [Upload de Fichier (`/files/upload`)](#upload-de-fichier-filesupload)
-    -   [Téléchargement de Fichier (`/files/download/:fileId`)](#t%C3%A9l%C3%A9chargement-de-fichier-filesdownloadfileid)
+    -   [Visualisation de Fichier (`/files`)](#visualisation-de-fichier-files)
 3.  [Endpoints de Partage de Fichier](#endpoints-de-partage-de-fichier)
     -   [Créer un Lien de Partage (`/share/create`)](#cr%C3%A9er-un-lien-de-partage-sharecreate)
 
@@ -33,20 +35,18 @@ Endpoints d'Authentification
 
 -   **Corps de la Requête (JSON)** :
 
-    json
 
-    `{
+    {
       "username": "testuser",
       "password": "password123"
-    }`
+    }
 
 -   **Réponse de Succès** :
 
-    json
 
-    `{
+    {
       "message": "User registered successfully"
-    }`
+    }
 
 ### Connexion (`/auth/login`)
 
@@ -58,20 +58,18 @@ Endpoints d'Authentification
 
 -   **Corps de la Requête (JSON)** :
 
-    json
 
-    `{
+    {
       "username": "testuser",
       "password": "password123"
-    }`
+    }
 
 -   **Réponse de Succès** :
 
-    json
 
-    `{
+    {
       "token": "<JWT_TOKEN>"
-    }`
+    }
 
 **Note** : Conserve le token JWT retourné, car il sera requis dans le header `Authorization` pour les requêtes suivantes.
 
@@ -98,11 +96,8 @@ Endpoints de Gestion des Fichiers
     -   **Key** : `file` (sélectionnez un fichier depuis votre système local)
 -   **Réponse de Succès** :
 
-    json
 
-    Copier le code
-
-    `{
+    {
       "message": "File uploaded successfully",
       "file": {
         "userId": "5f8d04e2b5f4d458e1fa734c",
@@ -111,22 +106,37 @@ Endpoints de Gestion des Fichiers
         "size": 1048576,
         "uploadDate": "2023-10-29T18:15:00.000Z"
       }
-    }`
+    }
 
-### Téléchargement de Fichier (`/files/download/:fileId`)
+### Visualisation de Fichier (`/files`)
+-   **URL** : `http://localhost:3000/files`
+-  **Méthode** : `GET`
+-  **Description** : Récupère la liste des fichiers de l'utilisateur.
+- **Autorisation** : Token JWT requis
+- **Headers** :
+    - `Authorization:
+    - `Bearer <JWT>`
+    - **Réponse de Succès** :
+  
 
--   **URL** : `http://localhost:3000/files/download/:fileId`
-
--   **Méthode** : `GET`
-
--   **Description** : Télécharge un fichier existant par son `fileId`.
-
--   **Autorisation** : Token JWT requis
-
--   **Headers** :
-
-    -   `Authorization: Bearer <JWT_TOKEN>`
--   **Réponse de Succès** : Télécharge le fichier spécifié.
+    {
+      "files": [
+        {
+          "userId": "5f8d04e2b5f4d458e1fa734c",
+          "filename": "Docker.pdf",
+          "path": "uploads/1638394838477-Docker.pdf",
+          "size": 1048576,
+          "uploadDate": "2023-10-29T18:15:00.000Z"
+        },
+        {
+          "userId": "5f8d04e2b5f4d458e1fa734c",
+          "filename": "Kubernetes.pdf",
+          "path": "uploads/1638394838477-Kubernetes.pdf",
+          "size": 1048576,
+          "uploadDate": "2023-10-29T18:15:00.000Z"
+        }
+      ]
+    }
 
 * * * * *
 
@@ -169,9 +179,7 @@ Endpoints de Partage de Fichier
 Notes sur les Autorisations
 ---------------------------
 
--   Les endpoints `/files/upload`, `/files/download/:fileId`, et `/share/create` nécessitent un token JWT valide. Ce token doit être fourni dans le header `Authorization` sous le format suivant :
-
-    makefile
+-   Les endpoints `/files/upload`, `/files`, et `/share/create` nécessitent un token JWT valide. Ce token doit être fourni dans le header `Authorization` sous le format suivant :
 
     `Authorization: Bearer <JWT_TOKEN>`
 
