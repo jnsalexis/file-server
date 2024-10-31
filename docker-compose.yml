@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_URI=mongodb://mongo:27017/file-server-db
+      - JWT_SECRET=q4CnH5m6oQbbHLyf8xBg6Ag
+      - NODE_ENV=production
+    volumes:
+      - .:/app
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
