@@ -35,18 +35,20 @@ Endpoints d'Authentification
 
 -   **Corps de la Requête (JSON)** :
 
-
-    `{
+```
+    {
       "username": "testuser",
       "password": "password123"
-    }`
+    }
+```
 
 -   **Réponse de Succès** :
 
-
-    `{
+```
+    {
       "message": "User registered successfully"
-    }`
+    }
+```
 
 ### Connexion (`/auth/login`)
 
@@ -58,18 +60,20 @@ Endpoints d'Authentification
 
 -   **Corps de la Requête (JSON)** :
 
-
+```
     {
       "username": "testuser",
       "password": "password123"
     }
+```
 
 -   **Réponse de Succès** :
 
-
+```
     {
       "token": "<JWT_TOKEN>"
     }
+```
 
 **Note** : Conserve le token JWT retourné, car il sera requis dans le header `Authorization` pour les requêtes suivantes.
 
@@ -96,8 +100,8 @@ Endpoints de Gestion des Fichiers
     -   **Key** : `file` (sélectionnez un fichier depuis votre système local)
 -   **Réponse de Succès** :
 
-
-    `{
+```
+    {
       "message": "File uploaded successfully",
       "file": {
         "userId": "5f8d04e2b5f4d458e1fa734c",
@@ -106,7 +110,8 @@ Endpoints de Gestion des Fichiers
         "size": 1048576,
         "uploadDate": "2023-10-29T18:15:00.000Z"
       }
-    }`
+    }
+```
 
 ### Visualisation de Fichier (`/files`)
 -   **URL** : `http://localhost:3000/files`
@@ -118,8 +123,8 @@ Endpoints de Gestion des Fichiers
     - `Bearer <JWT>`
     - **Réponse de Succès** :
   
-
-    `{
+```
+    {
       "files": [
         {
           "userId": "5f8d04e2b5f4d458e1fa734c",
@@ -136,7 +141,9 @@ Endpoints de Gestion des Fichiers
           "uploadDate": "2023-10-29T18:15:00.000Z"
         }
       ]
-    }`
+    }
+```
+
 
 * * * * *
 
@@ -160,19 +167,21 @@ Endpoints de Partage de Fichier
 
 -   **Corps de la Requête (JSON)** :
 
-
-    `{
+```
+    {
       "fileId": "<fileId>",
       "expiresInHours": 1
-    }`
+    }
+```
 
 
 -   **Réponse de Succès** :
 
-
-    `{
+```
+    {
       "link": "/share/unique_share_link"
-    }`
+    }
+```
 
 * * * * *
 
